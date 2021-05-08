@@ -1,0 +1,110 @@
+import sys
+
+test_status = {
+    'Test Case Verification Tc1': {'Status': 'Pass', 'Notes': ''},
+    'Test Case Verification Tc2': {'Status': 'Pass', 'Notes': ''},
+    'Test Case Verification Tc3': {'Status': 'Pass', 'Notes': ''},
+    'Test Case Verification Tc4': {'Status': 'Pass', 'Notes': ''},
+    'Test Case Verification Tc5': {'Status': 'Pass', 'Notes': ''},
+    'Test Case Verification Tc6': {'Status': 'Pass', 'Notes': ''},
+}
+htmFile = open("testresult.html", "w")
+htmFile.write("""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+                * {
+        font-family: sans-serif; /* Change your font family */
+        }
+        table.center {
+          margin-left:auto; 
+          margin-right:auto;
+       }
+        .content-table, caption{
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        caption{
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+
+        .content-table thead tr {
+        background-color: #2978b5;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+        padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+        border-bottom: 2px solid #2978b5;
+        }
+        .status[data-status="Students"]:after {
+        
+        color : orange
+        }
+
+        /* .content-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+        } */
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <table class="content-table center">
+        <caption>SAP Automation Results</caption>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Test Name</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+""")
+i = 1
+
+for key in test_status:
+    sno = '<tr><td>%i</td>' % i
+    testName = '<td>%s</td>' % key
+    if test_status[key]['Status'] == 'Fail':
+        status = '<td style="color:#ce1212">%s</td>' % test_status[key]['Status']
+    elif test_status[key]['Status'] == 'Pass':
+        status = '<td style="color:#81b214">%s</td>' % test_status[key]['Status']
+    else:
+        status = '<td>%s</td>' % test_status[key]['Status']
+    notes = '<td>%s</td></tr>' % test_status[key]['Notes']
+    full_form = sno + testName + status + notes
+    htmFile.write(full_form)
+    i = i + 1
+
+htmFile.write("""</tbody>
+</table>
+</body>
+</html>""")
+
+htmFile.close()
